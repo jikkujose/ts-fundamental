@@ -1,5 +1,9 @@
 {
   "compilerOptions": {
+    "strict": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictNullChecks": true,
     "noImplicitAny": true,
     "allowJs": true,
     "checkJs": true
