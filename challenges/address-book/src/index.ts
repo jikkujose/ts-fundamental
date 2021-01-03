@@ -1,11 +1,32 @@
-export class AddressBook {
-  contacts: any[] = []
+interface Person {
+  salutation?: string
+  firstName: string
+  middleName?: string
+  lastName: string
+  addresses: {
+    [k: string]: {
+      houseNumber: number
+      street: string
+      city: string
+      state: string
+      country: string
+      postalCode: number
+    }
+  }
+  phones: {
+    [k: string]: string
+  }
+  email?: string
+}
 
-  addContact(contact: any) {
+export class AddressBook {
+  contacts: Person[] = []
+
+  addContact(contact: Person) {
     this.contacts.push(contact)
   }
 
-  findContactByName(filter: { firstName?: any; lastName?: any }) {
+  findContactByName(filter: { firstName?: string; lastName?: string }) {
     return this.contacts.filter(c => {
       if (
         typeof filter.firstName !== "undefined" &&
@@ -24,7 +45,7 @@ export class AddressBook {
   }
 }
 
-export function formatDate(date: any) {
+export function formatDate(date: Date) {
   return (
     date
       .toISOString()
@@ -33,13 +54,13 @@ export function formatDate(date: any) {
   )
 }
 
-function getFullName(contact: any) {
+function getFullName(contact: Person) {
   return [contact.firstName, contact.middleName, contact.lastName]
     .filter(Boolean)
     .join(" ")
 }
 
-export function getVcardText(contact: any, date = new Date()) {
+export function getVcardText(contact: Person, date = new Date()) {
   const parts = [
     "BEGIN:VCARD",
     "VERSION:2.1",
