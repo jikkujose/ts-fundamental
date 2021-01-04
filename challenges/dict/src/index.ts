@@ -26,21 +26,21 @@ let someDict = {
 let something = mapDict(someDict, (item, index) => [item])
 
 // Array.prototype.reduce, but for Dict
-export function reduceDict<T>(
-  initializer: T,
+export function reduceDict<T, S>(
+  initializer: S,
   dict: Dict<T>,
-  operator: (accumilator: T, item: T, index: number) => T
+  operator: (accumulator: S, item: T, index: number) => S
 ) {
-  let intermediatAccumilator: T = initializer
+  let _accumulator: S = initializer
 
   Object.keys(dict).forEach((itemKey, index) => {
     let item = dict[itemKey]
     if (typeof item !== "undefined") {
-      intermediatAccumilator = operator(intermediatAccumilator, item, index)
+      _accumulator = operator(_accumulator, item, index)
     }
   })
 
-  return intermediatAccumilator
+  return _accumulator
 }
 
 let priceList: Dict<number> = {
@@ -49,8 +49,6 @@ let priceList: Dict<number> = {
   v: 3,
 }
 
-let rr = reduceDict(0, priceList, (accumilator, item, index) => {
+reduceDict(0, priceList, (accumilator, item, index) => {
   return (accumilator += item)
 })
-
-console.log(rr)
